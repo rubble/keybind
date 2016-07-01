@@ -54,7 +54,6 @@
 
       // do not register Alt, Ctrl, CtrlGraph, Meta key combinations.  Some of
       // them are handled by the browser (Ctrl+s) or the system (Alt+Tab).
-      const evKey = getKey(ev);
       if (specialKeys.indexOf(evKey) !== -1 || ev.altKey || ev.metaKey || ev.ctrlKey) {
         this._stack.splice(0, this._stack.length);
         return;
@@ -154,11 +153,11 @@
       this._handlers.push({keys, handler, options});
     },
 
-    removeEventListener: function removeEventListener(keys) {
-      this._handlers = this._handlers.filter(function(handler) {
-        const handlerKeys = handler.keys;
+    removeEventListener: function removeEventListener(keys, handler) {
+      this._handlers = this._handlers.filter(function(_handler) {
+        const handlerKeys = _handler.keys;
         let equal = false;
-        if (handlerKeys.length === keys.length) {
+        if (keys && handlerKeys.length === keys.length) {
           equal = true;
           for(let i=0, len = keys.length; i<len; i++) {
             if (handlerKeys[i] !== keys[i]) {
@@ -167,7 +166,7 @@
             }
           }
         }
-        return !equal;
+        return !equal || _handler.handler === handler;
       });
     },
 

@@ -45,11 +45,20 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return true;
   };
 
-  var specialKeys = ['Shift', 'Alt', 'Compose', 'Meta', 'Control', 'AltGraph'];
+  // specialKeys which are claering the stack on keydown since they are used
+  // by browsers and they do not fire keyup event.
+  // Chrome: F3 (search), F6
+  // Firefox: F10 (menu)
+  // IE9: F6, F7 (caret browsing)
+  var specialKeys = ['Alt', 'Meta', 'Control', 'F1', 'F3', 'F5', 'F6', 'F7', 'F10', 'F11'];
 
   function getKey(ev) {
     var key = ev.key;
-    if (key === 'Esc') return 'Escape';
+    if (key === 'Esc')
+      // Edge, IE11: `Esc`; Firefox, Chrome: `Escape`.
+      return 'Escape';else if (key === 'Spacebar')
+      // Edge, IE11: `Spacebar`; Firefox, Chrome: ` `.
+      return ' ';
     return key;
   };
 
@@ -62,14 +71,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     },
 
     _keyDownListener: function _keyDownListener(ev) {
+      var evKey = getKey(ev);
       this._stack = this._stack.filter(function (key) {
-        return key !== ev.key;
+        return key !== evKey;
       });
 
       // do not register Alt, Ctrl, CtrlGraph, Meta key combinations.  Some of
       // them are handled by the browser (Ctrl+s) or the system (Alt+Tab).
-      var evKey = getKey(ev);
-      if (evKey === "Alt" || ev.altKey || ev.key == "Meta" || ev.metaKey || ev.key === "Control" || ev.ctrlKey) {
+      if (specialKeys.indexOf(evKey) !== -1 || ev.altKey || ev.metaKey || ev.ctrlKey) {
         this._stack.splice(0, this._stack.length);
         return;
       }
@@ -90,8 +99,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     },
 
     _keyUpListener: function _keyUpListener(ev) {
+      var evKey = getKey(ev);
+
+      if (evKey === "Unidentified")
+        // IE9
+        return this.clearKeyStack();
+
       this._stack = this._stack.filter(function (stackKey) {
-        return stackKey.key !== getKey(ev);
+        return stackKey.key !== evKey;
       });
 
       var isAltKey = evKey === "Alt",
@@ -122,13 +137,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         this._stack.splice(idx, this._stack.length - idx);
       }
 
-      var key = {
-        key: evKey,
-        altKey: ev.altKey,
-        ctrlKey: ev.ctrlKey,
-        metaKey: ev.metaKey,
-        shiftKey: ev.shiftKey
-      };
       if (this._debug) console.log('keyup', evKey, this._stack.length);
     },
 
@@ -161,11 +169,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       this._handlers.push({ keys: keys, handler: handler, options: options });
     },
 
-    removeEventListener: function removeEventListener(keys) {
-      this._handlers = this._handlers.filter(function (handler) {
-        var handlerKeys = handler.keys;
+    removeEventListener: function removeEventListener(keys, handler) {
+      this._handlers = this._handlers.filter(function (_handler) {
+        var handlerKeys = _handler.keys;
         var equal = false;
-        if (handlerKeys.length === keys.length) {
+        if (keys && handlerKeys.length === keys.length) {
           equal = true;
           for (var i = 0, len = keys.length; i < len; i++) {
             if (handlerKeys[i] !== keys[i]) {
@@ -174,7 +182,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             }
           }
         }
-        return !equal;
+        return !equal || _handler.handler === handler;
       });
     },
 
