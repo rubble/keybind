@@ -21,7 +21,23 @@
     return true;
   };
 
-  const specialKeys = ['Shift', 'Alt', 'Compose', 'Meta', 'Control', 'AltGraph'];
+  // specialKeys which are claering the stack on keydown since they are used
+  // by browsers and they do not fire keyup event.
+  // Chrome: F3 (search), F6
+  // Firefox: F10 (menu)
+  // IE9: F6, F7 (caret browsing)
+  const specialKeys = ['Alt', 'Meta', 'Control', 'F1', 'F3', 'F5', 'F6', 'F7', 'F10', 'F11'];
+
+  function getKey(ev) {
+    let key = ev.key;
+    if (key === 'Esc')
+      // Edge, IE11: `Esc`; Firefox, Chrome: `Escape`.
+      return 'Escape';
+    else if (key === 'Spacebar')
+      // Edge, IE11: `Spacebar`; Firefox, Chrome: ` `.
+      return ' ';
+    return key;
+  };
 
   const KeyBindPrototype = {
     _indexOf: function _indexOf(key) {
@@ -33,16 +49,18 @@
     },
 
     _keyDownListener: function _keyDownListener(ev) {
-      this._stack = this._stack.filter(function(key) {return key !== ev.key});
+      const evKey = getKey(ev);
+      this._stack = this._stack.filter(key => key !== evKey);
 
       // do not register Alt, Ctrl, CtrlGraph, Meta key combinations.  Some of
       // them are handled by the browser (Ctrl+s) or the system (Alt+Tab).
-      if (ev.key === "Alt" || ev.altKey || ev.key == "Meta" || ev.metaKey || ev.key === "Control" || ev.ctrlKey) {
+      const evKey = getKey(ev);
+      if (specialKeys.indexOf(evKey) !== -1 || ev.altKey || ev.metaKey || ev.ctrlKey) {
         this._stack.splice(0, this._stack.length);
         return;
       }
       this._stack.push({
-        key: ev.key,
+        key: evKey,
         altKey: ev.altKey,
         ctrlKey: ev.ctrlKey,
         metaKey: ev.metaKey,
@@ -57,14 +75,20 @@
     },
 
     _keyUpListener: function _keyUpListener(ev) {
+      const evKey = getKey(ev);
+
+      if (evKey === "Unidentified")
+        // IE9
+        return this.clearKeyStack();
+
       this._stack = this._stack.filter(function(stackKey) {
-        return stackKey.key !== ev.key;
+        return stackKey.key !== evKey;
       });
 
-      const isAltKey = ev.key === "Alt",
-        isCtrlKey = ev.key === "Control",
-        isMetaKey = ev.key === "Meta",
-        isShiftKey = ev.key === "Shift";
+      const isAltKey = evKey === "Alt",
+        isCtrlKey = evKey === "Control",
+        isMetaKey = evKey === "Meta",
+        isShiftKey = evKey === "Shift";
 
       if (isAltKey || isCtrlKey || isMetaKey || isShiftKey) {
         // keyup event might not be fired if browser has a keybinding, e.g.
@@ -78,7 +102,7 @@
         });
       }
 
-      if (ev.key === 'AltGraph' || ev.key === 'Compose') {
+      if (evKey === 'AltGraph' || evKey === 'Compose') {
         // key sequence 'AltGraph+shift-AltGraph-Shit' emits AltGraph then Shift
         // on keydown event and then Compose and Shift on KeyDown.
         const altGrIdx = this._indexOf('AltGraph'),
@@ -99,7 +123,7 @@
       }
 
       if (this._debug)
-        console.log('keyup', ev.key, this._stack.length);
+        console.log('keyup', evKey, this._stack.length);
     },
 
     _keyBindingListener: function _keyListener(ev) {

@@ -47,6 +47,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   var specialKeys = ['Shift', 'Alt', 'Compose', 'Meta', 'Control', 'AltGraph'];
 
+  function getKey(ev) {
+    var key = ev.key;
+    if (key === 'Esc') return 'Escape';
+    return key;
+  };
+
   var KeyBindPrototype = {
     _indexOf: function _indexOf(key) {
       for (var i = 0, len = this._stack.length; i < len; i++) {
@@ -62,12 +68,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       // do not register Alt, Ctrl, CtrlGraph, Meta key combinations.  Some of
       // them are handled by the browser (Ctrl+s) or the system (Alt+Tab).
-      if (ev.key === "Alt" || ev.altKey || ev.key == "Meta" || ev.metaKey || ev.key === "Control" || ev.ctrlKey) {
+      var evKey = getKey(ev);
+      if (evKey === "Alt" || ev.altKey || ev.key == "Meta" || ev.metaKey || ev.key === "Control" || ev.ctrlKey) {
         this._stack.splice(0, this._stack.length);
         return;
       }
       this._stack.push({
-        key: ev.key,
+        key: evKey,
         altKey: ev.altKey,
         ctrlKey: ev.ctrlKey,
         metaKey: ev.metaKey,
@@ -84,13 +91,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     _keyUpListener: function _keyUpListener(ev) {
       this._stack = this._stack.filter(function (stackKey) {
-        return stackKey.key !== ev.key;
+        return stackKey.key !== getKey(ev);
       });
 
-      var isAltKey = ev.key === "Alt",
-          isCtrlKey = ev.key === "Control",
-          isMetaKey = ev.key === "Meta",
-          isShiftKey = ev.key === "Shift";
+      var isAltKey = evKey === "Alt",
+          isCtrlKey = evKey === "Control",
+          isMetaKey = evKey === "Meta",
+          isShiftKey = evKey === "Shift";
 
       if (isAltKey || isCtrlKey || isMetaKey || isShiftKey) {
         // keyup event might not be fired if browser has a keybinding, e.g.
@@ -101,7 +108,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         });
       }
 
-      if (ev.key === 'AltGraph' || ev.key === 'Compose') {
+      if (evKey === 'AltGraph' || evKey === 'Compose') {
         // key sequence 'AltGraph+shift-AltGraph-Shit' emits AltGraph then Shift
         // on keydown event and then Compose and Shift on KeyDown.
         var altGrIdx = this._indexOf('AltGraph'),
@@ -116,13 +123,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       }
 
       var key = {
-        key: ev.key,
+        key: evKey,
         altKey: ev.altKey,
         ctrlKey: ev.ctrlKey,
         metaKey: ev.metaKey,
         shiftKey: ev.shiftKey
       };
-      if (this._debug) console.log('keyup', ev.key, this._stack.length);
+      if (this._debug) console.log('keyup', evKey, this._stack.length);
     },
 
     _keyBindingListener: function _keyListener(ev) {
