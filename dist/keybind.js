@@ -152,12 +152,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     },
 
     enable: function enebale() {
+      this.clearStack();
       document.body.addEventListener('keyup', this._keyUpListener, false);
       document.body.addEventListener('keydown', this._keyDownListener, false);
       document.body.addEventListener('keybinding', this._keyBindingListener, false);
     },
     disable: function disable() {
-
+      this.clearStack();
       document.body.removeEventListener('keyup', this._keyUpListener);
       document.body.removeEventListener('keydown', this._keyDownListener);
       document.body.removeEventListener('keybinding', this._keyBindingListener);

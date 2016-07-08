@@ -1,6 +1,6 @@
 {
   "name": "keybind",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "bind keys in your web app",
   "main": "dist/keybind.min.js",
   "scripts": {
