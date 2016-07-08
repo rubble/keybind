@@ -1,0 +1,9 @@
+{
+    "source": {
+	"include": "./src/keybind.js"
+    },
+    "opts": {
+	"private": true,
+	"destination": "jsdoc"
+    }
+}

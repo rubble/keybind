@@ -1,12 +1,40 @@
-(function(factory) {
-    if (typeof require === "function" && typeof exports === "object" && typeof module === "object") {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: keybind.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: keybind.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>(function(factory) {
+    if (typeof require === "function" &amp;&amp; typeof exports === "object" &amp;&amp; typeof module === "object") {
       // CommonJS module
       module.exports = factory();
-    } else if (typeof define === "function" && define.amd) {
+    } else if (typeof define === "function" &amp;&amp; define.amd) {
       // AMD anonymous module
       define([], factory);
     } else {
-      // No module loader (plain <script> tag) - put directly in global namespace
+      // No module loader (plain &lt;script> tag) - put directly in global namespace
       factory();
     }
 })(function() {
@@ -32,7 +60,7 @@
   function equal(key, stack) {
     if (key.length !== stack.length)
       return false;
-    for(let i=0, len=key.length; i<len; i++) {
+    for(let i=0, len=key.length; i&lt;len; i++) {
       if (key[i] !== stack[i].key)
         return false;
     }
@@ -94,7 +122,7 @@
    */
   const KeyBindPrototype = {
     _indexOf: function _indexOf(key) {
-      for(let i=0, len=this._stack.length; i<len; i++) {
+      for(let i=0, len=this._stack.length; i&lt;len; i++) {
         if (this._stack[i].key === key)
           return i;
       }
@@ -160,10 +188,10 @@
         // keyup event might not be fired if browser has a keybinding, e.g.
         // Alt+d or Ctr+s.  We need this part just for shiftKey.
         this._stack = this._stack.filter(function(stackKey) {
-          const ret = (isAltKey && !stackKey.altKey ||
-                  isCtrlKey && !stackKey.ctrlKey ||
-                  isMetaKey && !stackKey.metaKey ||
-                  isShiftKey && !stackKey.shiftKey);
+          const ret = (isAltKey &amp;&amp; !stackKey.altKey ||
+                  isCtrlKey &amp;&amp; !stackKey.ctrlKey ||
+                  isMetaKey &amp;&amp; !stackKey.metaKey ||
+                  isShiftKey &amp;&amp; !stackKey.shiftKey);
           return ret;
         });
       }
@@ -174,7 +202,7 @@
         const altGrIdx = this._indexOf('AltGraph'),
           composeIdx = this._indexOf('Compose');
         let idx;
-        if (altGrIdx !== -1 && composeIdx !== -1)
+        if (altGrIdx !== -1 &amp;&amp; composeIdx !== -1)
           idx = Math.min(altGrIdx, composeIdx)
         else if (altGrIdx !== -1)
           idx = altGrIdx;
@@ -268,9 +296,9 @@
       this._handlers = this._handlers.filter(function(_handler) {
         const handlerKeys = _handler.keys;
         let equal = false;
-        if (keys && handlerKeys.length === keys.length) {
+        if (keys &amp;&amp; handlerKeys.length === keys.length) {
           equal = true;
-          for(let i=0, len = keys.length; i<len; i++) {
+          for(let i=0, len = keys.length; i&lt;len; i++) {
             if (handlerKeys[i] !== keys[i]) {
               equal = false;
               break;
@@ -332,3 +360,39 @@
 
   return KeyBind;
 });
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#_keyBindingListener">_keyBindingListener</a></li><li><a href="global.html#_keyDownListener">_keyDownListener</a></li><li><a href="global.html#_keyUpListener">_keyUpListener</a></li><li><a href="global.html#addEventListener">addEventListener</a></li><li><a href="global.html#clearStack-clearthestackofkeysregisteredthroughkeydownandkeyupevents.">clearStack - clear the stack of keys registered through
+   keydown and keyup events.</a></li><li><a href="global.html#disableDisablekeybindingsbyremovingalleventlistenersandclearingthekeystack.">disable
+
+ Disable key bindings by removing all event listeners and clearing the
+ key stack.</a></li><li><a href="global.html#disposeClearthestack,removeallhandlersandeventlisteners.CallthismethodbeforeyouwanttogarbacecollecttheKeyBindobject.">dispose
+
+ Clear the stack, remove all handlers and event listeners.  Call this
+ method before you want to garbace collect the KeyBind object.</a></li><li><a href="global.html#enableEnablekeybindings.Thismethodclearsthestackandaddseventlistenerstothebodyelement.">enable
+
+ Enable key bindings.  This method clears the stack and adds event
+ listeners to the body element.</a></li><li><a href="global.html#equal-CompareifalistofkeysisthesameasalistofKeyObjectsinastack.KeyObjectisisofshape.ThisfunctionignoresaltKey,ctrlKey,metaKeyandshiftKey.">equal - Compare if a list of keys is the same as a list of KeyObjects in a stack. 
+   KeyObject is is of shape.  This function ignores altKey, ctrlKey,
+   metaKey and shiftKey.</a></li><li><a href="global.html#getKey-getkeyinplatformindependedwayfromaKeyEvent(keydownorkeyup).">getKey - get key in platform independed way from a KeyEvent (keydown or keyup).</a></li><li><a href="global.html#KeyBind">KeyBind</a></li><li><a href="global.html#removeEventListener-Removesalllistenersthatmatchthekeycombinationoronlytheonegivenbyhandlerargument.">removeEventListener - Removes all listeners that match the key
+   combination or only the one given by handler argument.</a></li><li><a href="global.html#reset-clearthestackandremoveallhandlers.">reset - clear the stack and remove all handlers.</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Jul 08 2016 11:27:30 GMT+0100 (WEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
