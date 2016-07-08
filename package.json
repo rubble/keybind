@@ -19,6 +19,7 @@
     "browserify": "^13.0.1",
     "gulp-babel": "^6.1.2",
     "gulp-bump": "^2.1.0",
+    "gulp-jsdoc3": "^0.3.0",
     "gulp-license": "^1.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-streamify": "^1.0.2",

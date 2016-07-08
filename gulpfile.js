@@ -3,6 +3,7 @@ const babel = require("gulp-babel"),
   karma = require("karma"),
   bump = require("gulp-bump"),
   license = require("gulp-license"),
+  jsdoc = require("gulp-jsdoc3"),
   rename = require("gulp-rename"),
   streamify = require("gulp-streamify"),
   uglify = require("gulp-uglify");
@@ -24,8 +25,14 @@ gulp.task('dev', () => {
     .pipe(gulp.dest('dist'));
 });
 
+gulp.task('jsdoc', () => {
+  const conf = require("./conf.json");
+  return gulp.src(['./src/keybind.js'], {read: false})
+    .pipe(jsdoc(conf));
+});
+
 gulp.task('watch', ['dev'], () => {
-  gulp.watch('./src/*.js', ['dev']);
+  gulp.watch('./src/*.js', ['dev', 'jsdoc']);
 });
 
 gulp.task('bump', () => {

@@ -11,6 +11,31 @@
     }
 })(function() {
   'use strict';
+
+  /**
+   *  equal - Compare if a list of keys is the same as a list of KeyObjects in a stack. 
+   *    KeyObject is is of shape 
+   *    `{
+   *       key: string,
+   *       altKey: boolean,
+   *       ctrlKey: boolean, 
+   *       metaKey: boolean,
+   *       shiftKey: boolean,
+   *    }`
+   *    This function ignores altKey, ctrlKey, metaKey and shiftKey.
+   *  @private
+   *
+   *  @param {String[]} key
+   *  @param {Object[]} stack - stack of KeyObjects
+   *    {Object} KeyObject
+   *    {string} KeyObject.string
+   *    {boolean} KeyObject.altKey
+   *    {boolean} KeyObject.ctrlKey
+   *    {boolean} KeyObject.metaKey
+   *    {boolean} KeyObject.shiftKey
+   *    
+   *  @return {boolean} - return true if keys and stack are the same.
+   */
   function equal(key, stack) {
     if (key.length !== stack.length)
       return false;
@@ -28,6 +53,13 @@
   // IE9: F6, F7 (caret browsing)
   const specialKeys = ['Alt', 'Meta', 'Control', 'F1', 'F3', 'F5', 'F6', 'F7', 'F10', 'F11'];
 
+  /**
+   *  getKey - get key in platform independed way from a KeyEvent (keydown or keyup).
+   *  @private
+   *
+   *  @param {KeyEvent} ev
+   *  @return {String}
+   */
   function getKey(ev) {
     let key = ev.key;
     if (key === 'Esc')
@@ -39,6 +71,34 @@
     return key;
   };
 
+  /**
+   *  @typedef KeyObject - object hodling key information
+   *  @type {object}
+   *  @property {string} key - platform independent string representing a key
+   *  @property {boolean} altKey - true if alt key was pressed
+   *  @property {boolean} ctrlKey - true if control key was pressed
+   *  @property {boolean} metaKey - true if meta key wsa pressed 
+   *  @property {boolean} shiftKey - true if shift key was pressed
+   */
+
+  /**
+   *  @callback keyBindListener
+   *  @param {KeyObject[]} stack
+   */
+
+  /**
+   *  @typedef HandlerObject
+   *  @type {object}
+   *  @property {string[]} keys - list of chars
+   *  @property {keyBindListener} handler - handler callback
+   *  @property {object} options - options object 
+   */
+
+  /**
+   *  @name KeyBindPrototype - prototype of KeyBind object
+   *  @private
+   *  @memberof KeyBind.protoype
+   */
   const KeyBindPrototype = {
     _indexOf: function _indexOf(key) {
       for(let i=0, len=this._stack.length; i<len; i++) {
@@ -48,6 +108,14 @@
       return -1;
     },
 
+    /**
+     *  @method _keyDownListener
+     *  @private
+     * 
+     *  @param {KeyEvent} ev
+     *  @emit {CustomEvent} keybinding - emits keybinding event if the current
+     *     stack matches with one of registered key combinations.
+     */
     _keyDownListener: function _keyDownListener(ev) {
       const evKey = getKey(ev);
       this._stack = this._stack.filter(key => key !== evKey);
@@ -73,6 +141,12 @@
       document.body.dispatchEvent(keyBindEvent);
     },
 
+    /**
+     *  @method _keyUpListener
+     *  @private
+     *
+     *  @param {KeyEvent} ev
+     */
     _keyUpListener: function _keyUpListener(ev) {
       const evKey = getKey(ev);
 
@@ -125,6 +199,12 @@
         console.log('keyup', evKey, this._stack.length);
     },
 
+    /**
+     *  @method _keyBindingListener
+     *  @private
+     *
+     *  @param {KeyBind} ev
+     */
     _keyBindingListener: function _keyListener(ev) {
       this._handlers.forEach(handler => {
         if (equal(handler.keys, ev.detail)) {
@@ -135,12 +215,27 @@
       });
     },
 
+    /**
+     *  @method enable
+     *
+     *  Enable key bindings.  This method clears the stack and adds event
+     *  listeners to the body element.
+     *
+     *  @listens key
+     */
     enable: function enebale() {
       this.clearStack();
       document.body.addEventListener('keyup', this._keyUpListener, false);
       document.body.addEventListener('keydown', this._keyDownListener, false);
       document.body.addEventListener('keybinding', this._keyBindingListener, false);
     },
+
+    /**
+     *  @method disable
+     *
+     *  Disable key bindings by removing all event listeners and clearing the
+     *  key stack.
+     */
     disable: function disable() {
       this.clearStack();
       document.body.removeEventListener('keyup', this._keyUpListener);
@@ -148,12 +243,34 @@
       document.body.removeEventListener('keybinding', this._keyBindingListener);
     },
 
+    /**
+     *  @method addEventListener
+     *
+     *  @param {string[]} keys - list of strings that the listener should
+     *    handle
+     *  @param {keyBindListener} handler - keybind event listener.  As an argument
+     *    a copy of the current stack (list of KeyObjects) is passed.
+     *  @param {Object} [options] - currently only optinos.clearKeyStack is
+     *    supported: a boolean option, if true clears the stack after the
+     *    handler is called, the default is false
+     */
     addEventListener: function addEventListener(keys, handler, options) {
       options = options || {clearKeyStack: false};
       options.clearKeyStack = !!options.clearKeyStack;
       this._handlers.push({keys, handler, options});
     },
 
+    /**
+     *  @method removeEventListener - Removes all listeners that match the key
+     *    combination or only the one given by handler argument.
+     *  @example KeyBind.removeEventListener(['a', 'b']);
+     *  @example KeyBind.removeEventListener(null, abKeyHandler);
+     *
+     *  @param {?string[]} [keys] - a list of strings
+     *  @param {?keyBindListener} [handler]
+     *
+     *
+     */
     removeEventListener: function removeEventListener(keys, handler) {
       this._handlers = this._handlers.filter(function(_handler) {
         const handlerKeys = _handler.keys;
@@ -171,21 +288,45 @@
       });
     },
 
+    /**
+     *  @method clearStack
+     *
+     *  Clear the stack of keys registered through keydown and keyup events.
+     */
     clearStack: function() {
       this._stack.splice(0, this._stack.length);
     },
 
+    /**
+     *  @method reset
+     *
+     *  Clear the stack and remove all handlers.
+     */
     reset: function() {
       this.clearStack();
       this._handlers.splice(0, this._handlers.length);
     },
 
+    /**
+     *  @method dispose
+     *
+     *  Clear the stack, remove all handlers and event listeners.  Call this
+     *  method before you want to garbace collect the KeyBind object.
+     */
     dispose: function() {
       this.reset();
       this.disable();
     },
   };
 
+  /**
+   *  @name KeyBind
+   *
+   *  @property {KeyObject[]} KeyBind.stack
+   *  @property {HandlerObject[]} KeyBind._handlers
+   *  @property {boolean} KeyBind._debug
+   *
+   */
   const KeyBind = Object.create(
     KeyBindPrototype,
     {
