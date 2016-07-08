@@ -41,5 +41,5 @@ gulp.task('bump', () => {
     .pipe(gulp.dest('./'));
 });
 
-gulp.task('build', ['dev', 'bump']);
+gulp.task('build', ['dev', 'bump', 'jsdoc']);
 
