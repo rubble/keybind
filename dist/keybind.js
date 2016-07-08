@@ -38,16 +38,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   'use strict';
 
   /**
-   *  equal - Compare if a list of keys is the same as a list of KeyObjects in a stack. 
-   *    KeyObject is is of shape 
-   *    `{
-   *       key: string,
-   *       altKey: boolean,
-   *       ctrlKey: boolean, 
-   *       metaKey: boolean,
-   *       shiftKey: boolean,
-   *    }`
-   *    This function ignores altKey, ctrlKey, metaKey and shiftKey.
+   *  @function equal - Compare if a list of keys is the same as a list of KeyObjects in a stack. 
+   *    KeyObject is is of shape.  This function ignores altKey, ctrlKey,
+   *    metaKey and shiftKey.
    *  @private
    *
    *  @param {String[]} key
@@ -78,7 +71,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   var specialKeys = ['Alt', 'Meta', 'Control', 'F1', 'F3', 'F5', 'F6', 'F7', 'F10', 'F11'];
 
   /**
-   *  getKey - get key in platform independed way from a KeyEvent (keydown or keyup).
+   *  @function getKey - get key in platform independed way from a KeyEvent (keydown or keyup).
    *  @private
    *
    *  @param {KeyEvent} ev
@@ -305,18 +298,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     },
 
     /**
-     *  @method clearStack
-     *
-     *  Clear the stack of keys registered through keydown and keyup events.
+     *  @method clearStack - clear the stack of keys registered through
+     *    keydown and keyup events.
      */
     clearStack: function clearStack() {
       this._stack.splice(0, this._stack.length);
     },
 
     /**
-     *  @method reset
-     *
-     *  Clear the stack and remove all handlers.
+     *  @method reset - clear the stack and remove all handlers.
      */
     reset: function reset() {
       this.clearStack();

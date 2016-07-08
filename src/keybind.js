@@ -126,6 +126,12 @@
         metaKey: ev.metaKey,
         shiftKey: ev.shiftKey,
       });
+      this._lastKeyDownTime = Date.now();
+      if (this._timeoutId)
+        clearTimeout(this._timeoutId);
+      if (this.clearStackTimeout)
+        this._timeoutId = setTimeout(this._clearStackCallback.bind(this), this.clearStackTimeout);
+
       if (this._debug)
         console.log('keydown', this._stack.map(function(key) {return key.key}));
 
@@ -209,6 +215,18 @@
     },
 
     /**
+     *  @methhod _clearStackCallback - clearStack interval callback
+     *  @private
+     */
+    _clearStackCallback: function() {
+      this._timeoutId = null;
+      if (this._debug) console.log('_clearStackCallback');
+      if (this.stack.length > 0 && Date.now() - this._lastKeyDownTime > this.clearStackTimeout) {
+        this.clearStack();
+      }
+    },
+
+    /**
      *  @method enable
      *
      *  Enable key bindings.  This method clears the stack and adds event
@@ -283,14 +301,19 @@
 
     /**
      *  @method clearStack - clear the stack of keys registered through
-     *    keydown and keyup events.
+     *    keydown and keyup events.  Also remove timeout callback which would
+     *    clear the stack.
      */
     clearStack: function() {
       this._stack.splice(0, this._stack.length);
+      if (this._timeoutId) {
+        clearTimeout(this._timeoutId);
+        this._timeoutId = null;
+      }
     },
 
     /**
-     *  @method reset - clear the stack and remove all handlers.
+     *  @method reset - clear the stack, remove all handlers and clear timeout.
      */
     reset: function() {
       this.clearStack();
@@ -312,17 +335,27 @@
   /**
    *  @name KeyBind
    *
-   *  @property {KeyObject[]} KeyBind.stack
-   *  @property {HandlerObject[]} KeyBind._handlers
+   *  @property {number} KeyBind.clearStackTimeout - number of milliseconds after
+   *    which clear the stack if there was no keydown event.  If zero (or
+   *    falsy) do not ever clear the stack from a setTimeout callback.
+   *  @property {KeyObject[]} KeyBind._stack - stack of keys
+   *  @property {HandlerObject[]} KeyBind._handlers - list of handlers
    *  @property {boolean} KeyBind._debug
-   *
+   *  @property {nubmer} KeyBind._timeoutId - timeoutId returned from
+   *    setTimeout, when setting the KeyBindPrototype.clearStackCallback.
+   *  @property {number} KeyBind._lastDownTime - last time a key was pressed
+   *    (registered on keydown event).
    */
   const KeyBind = Object.create(
     KeyBindPrototype,
     {
+
+      clearStackTimeout: {value: 750, writable: true,},
       _stack: {value: [], writable: true,},
       _handlers: {value: [], writable: true,},
       _debug: {value: false, writable: true,},
+      _timeoutId: {value: null, writable: true,},
+      _lastKeyDownTime: {value: 0, writable: true,},
     }
   );
 
