@@ -195,7 +195,11 @@
       }
 
       if (this._debug)
-        console.log('keyup', evKey, this._stack.length);
+        console.log('keyup', evKey, this._stack.length, this._timeoutId && this._stack.length === 0 ? 'clearing this._timeoutId' : '');
+
+      if (this._stack.length === 0 && this._timeoutId)
+        clearTimeout(this._timeoutId);
+
     },
 
     /**
