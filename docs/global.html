@@ -133,7 +133,32 @@
 
         <tr>
             
-                <td class="name"><code>KeyBind.stack</code></td>
+                <td class="name"><code>KeyBind.clearStackTimeout</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">number of milliseconds after
+   which clear the stack if there was no keydown event.  If zero (or
+   falsy) do not ever clear the stack from a setTimeout callback.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>KeyBind._stack</code></td>
             
 
             <td class="type">
@@ -149,7 +174,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">stack of keys</td>
         </tr>
 
     
@@ -172,7 +197,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">list of handlers</td>
         </tr>
 
     
@@ -196,6 +221,54 @@
             
 
             <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>KeyBind._timeoutId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">nubmer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">timeoutId returned from
+   setTimeout, when setting the KeyBindPrototype.clearStackCallback.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>KeyBind._lastDownTime</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">last time a key was pressed
+   (registered on keydown event).</td>
         </tr>
 
     
@@ -234,7 +307,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line312">line 312</a>
+        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line335">line 335</a>
     </li></ul></dd>
     
 
@@ -289,7 +362,32 @@
 
         <tr>
             
-                <td class="name"><code>KeyBind.stack</code></td>
+                <td class="name"><code>KeyBind.clearStackTimeout</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">number of milliseconds after
+   which clear the stack if there was no keydown event.  If zero (or
+   falsy) do not ever clear the stack from a setTimeout callback.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>KeyBind._stack</code></td>
             
 
             <td class="type">
@@ -305,7 +403,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">stack of keys</td>
         </tr>
 
     
@@ -328,7 +426,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">list of handlers</td>
         </tr>
 
     
@@ -352,6 +450,54 @@
             
 
             <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>KeyBind._timeoutId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">nubmer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">timeoutId returned from
+   setTimeout, when setting the KeyBindPrototype.clearStackCallback.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>KeyBind._lastDownTime</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">last time a key was pressed
+   (registered on keydown event).</td>
         </tr>
 
     
@@ -390,7 +536,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line312">line 312</a>
+        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line335">line 335</a>
     </li></ul></dd>
     
 
@@ -513,7 +659,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line195">line 195</a>
+        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line201">line 201</a>
     </li></ul></dd>
     
 
@@ -640,7 +786,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line195">line 195</a>
+        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line201">line 201</a>
     </li></ul></dd>
     
 
@@ -1021,7 +1167,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line137">line 137</a>
+        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line143">line 143</a>
     </li></ul></dd>
     
 
@@ -1148,7 +1294,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line137">line 137</a>
+        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line143">line 143</a>
     </li></ul></dd>
     
 
@@ -1353,7 +1499,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line239">line 239</a>
+        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line257">line 257</a>
     </li></ul></dd>
     
 
@@ -1558,7 +1704,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line239">line 239</a>
+        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line257">line 257</a>
     </li></ul></dd>
     
 
@@ -1589,8 +1735,9 @@
 
     
 
-    <h4 class="name" id="clearStack-clearthestackofkeysregisteredthroughkeydownandkeyupevents."><span class="type-signature"></span>clearStack - clear the stack of keys registered through
-   keydown and keyup events.<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="clearStack-clearthestackofkeysregisteredthroughkeydownandkeyupevents.Alsoremovetimeoutcallbackwhichwouldclearthestack."><span class="type-signature"></span>clearStack - clear the stack of keys registered through
+   keydown and keyup events.  Also remove timeout callback which would
+   clear the stack.<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
@@ -1637,7 +1784,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line284">line 284</a>
+        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line302">line 302</a>
     </li></ul></dd>
     
 
@@ -1668,8 +1815,9 @@
 
     
 
-    <h4 class="name" id="clearStack-clearthestackofkeysregisteredthroughkeydownandkeyupevents."><span class="type-signature"></span>clearStack - clear the stack of keys registered through
-   keydown and keyup events.<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="clearStack-clearthestackofkeysregisteredthroughkeydownandkeyupevents.Alsoremovetimeoutcallbackwhichwouldclearthestack."><span class="type-signature"></span>clearStack - clear the stack of keys registered through
+   keydown and keyup events.  Also remove timeout callback which would
+   clear the stack.<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
@@ -1716,88 +1864,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line284">line 284</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="disableDisablekeybindingsbyremovingalleventlistenersandclearingthekeystack."><span class="type-signature"></span>disable
-
- Disable key bindings by removing all event listeners and clearing the
- key stack.<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line226">line 226</a>
+        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line302">line 302</a>
     </li></ul></dd>
     
 
@@ -1878,7 +1945,88 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line226">line 226</a>
+        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line244">line 244</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="disableDisablekeybindingsbyremovingalleventlistenersandclearingthekeystack."><span class="type-signature"></span>disable
+
+ Disable key bindings by removing all event listeners and clearing the
+ key stack.<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line244">line 244</a>
     </li></ul></dd>
     
 
@@ -1959,7 +2107,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line300">line 300</a>
+        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line323">line 323</a>
     </li></ul></dd>
     
 
@@ -2040,7 +2188,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line300">line 300</a>
+        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line323">line 323</a>
     </li></ul></dd>
     
 
@@ -2121,7 +2269,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line211">line 211</a>
+        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line229">line 229</a>
     </li></ul></dd>
     
 
@@ -2207,7 +2355,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line211">line 211</a>
+        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line229">line 229</a>
     </li></ul></dd>
     
 
@@ -3039,7 +3187,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line256">line 256</a>
+        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line274">line 274</a>
     </li></ul></dd>
     
 
@@ -3226,7 +3374,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line256">line 256</a>
+        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line274">line 274</a>
     </li></ul></dd>
     
 
@@ -3259,162 +3407,6 @@
     <pre class="prettyprint"><code>KeyBind.removeEventListener(null, abKeyHandler);
 
  </code></pre>
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="reset-clearthestackandremoveallhandlers."><span class="type-signature"></span>reset - clear the stack and remove all handlers.<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line292">line 292</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="reset-clearthestackandremoveallhandlers."><span class="type-signature"></span>reset - clear the stack and remove all handlers.<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="keybind.js.html">keybind.js</a>, <a href="keybind.js.html#line292">line 292</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -4448,8 +4440,9 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#_keyBindingListener">_keyBindingListener</a></li><li><a href="global.html#_keyDownListener">_keyDownListener</a></li><li><a href="global.html#_keyUpListener">_keyUpListener</a></li><li><a href="global.html#addEventListener">addEventListener</a></li><li><a href="global.html#clearStack-clearthestackofkeysregisteredthroughkeydownandkeyupevents.">clearStack - clear the stack of keys registered through
-   keydown and keyup events.</a></li><li><a href="global.html#disableDisablekeybindingsbyremovingalleventlistenersandclearingthekeystack.">disable
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#_keyBindingListener">_keyBindingListener</a></li><li><a href="global.html#_keyDownListener">_keyDownListener</a></li><li><a href="global.html#_keyUpListener">_keyUpListener</a></li><li><a href="global.html#addEventListener">addEventListener</a></li><li><a href="global.html#clearStack-clearthestackofkeysregisteredthroughkeydownandkeyupevents.Alsoremovetimeoutcallbackwhichwouldclearthestack.">clearStack - clear the stack of keys registered through
+   keydown and keyup events.  Also remove timeout callback which would
+   clear the stack.</a></li><li><a href="global.html#disableDisablekeybindingsbyremovingalleventlistenersandclearingthekeystack.">disable
 
  Disable key bindings by removing all event listeners and clearing the
  key stack.</a></li><li><a href="global.html#disposeClearthestack,removeallhandlersandeventlisteners.CallthismethodbeforeyouwanttogarbacecollecttheKeyBindobject.">dispose
@@ -4461,13 +4454,13 @@
  listeners to the body element.</a></li><li><a href="global.html#equal-CompareifalistofkeysisthesameasalistofKeyObjectsinastack.KeyObjectisisofshape.ThisfunctionignoresaltKey,ctrlKey,metaKeyandshiftKey.">equal - Compare if a list of keys is the same as a list of KeyObjects in a stack. 
    KeyObject is is of shape.  This function ignores altKey, ctrlKey,
    metaKey and shiftKey.</a></li><li><a href="global.html#getKey-getkeyinplatformindependedwayfromaKeyEvent(keydownorkeyup).">getKey - get key in platform independed way from a KeyEvent (keydown or keyup).</a></li><li><a href="global.html#KeyBind">KeyBind</a></li><li><a href="global.html#removeEventListener-Removesalllistenersthatmatchthekeycombinationoronlytheonegivenbyhandlerargument.">removeEventListener - Removes all listeners that match the key
-   combination or only the one given by handler argument.</a></li><li><a href="global.html#reset-clearthestackandremoveallhandlers.">reset - clear the stack and remove all handlers.</a></li></ul>
+   combination or only the one given by handler argument.</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Jul 08 2016 11:29:43 GMT+0100 (WEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Jul 08 2016 12:20:24 GMT+0100 (WEST)
 </footer>
 
 <script> prettyPrint(); </script>

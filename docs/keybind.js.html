@@ -154,6 +154,12 @@
         metaKey: ev.metaKey,
         shiftKey: ev.shiftKey,
       });
+      this._lastKeyDownTime = Date.now();
+      if (this._timeoutId)
+        clearTimeout(this._timeoutId);
+      if (this.clearStackTimeout)
+        this._timeoutId = setTimeout(this._clearStackCallback.bind(this), this.clearStackTimeout);
+
       if (this._debug)
         console.log('keydown', this._stack.map(function(key) {return key.key}));
 
@@ -237,6 +243,18 @@
     },
 
     /**
+     *  @methhod _clearStackCallback - clearStack interval callback
+     *  @private
+     */
+    _clearStackCallback: function() {
+      this._timeoutId = null;
+      if (this._debug) console.log('_clearStackCallback');
+      if (this._stack.length > 0 &amp;&amp; Date.now() - this._lastKeyDownTime > this.clearStackTimeout) {
+        this.clearStack();
+      }
+    },
+
+    /**
      *  @method enable
      *
      *  Enable key bindings.  This method clears the stack and adds event
@@ -311,14 +329,19 @@
 
     /**
      *  @method clearStack - clear the stack of keys registered through
-     *    keydown and keyup events.
+     *    keydown and keyup events.  Also remove timeout callback which would
+     *    clear the stack.
      */
     clearStack: function() {
       this._stack.splice(0, this._stack.length);
+      if (this._timeoutId) {
+        clearTimeout(this._timeoutId);
+        this._timeoutId = null;
+      }
     },
 
     /**
-     *  @method reset - clear the stack and remove all handlers.
+     *  @method reset - clear the stack, remove all handlers and clear timeout.
      */
     reset: function() {
       this.clearStack();
@@ -340,17 +363,27 @@
   /**
    *  @name KeyBind
    *
-   *  @property {KeyObject[]} KeyBind.stack
-   *  @property {HandlerObject[]} KeyBind._handlers
+   *  @property {number} KeyBind.clearStackTimeout - number of milliseconds after
+   *    which clear the stack if there was no keydown event.  If zero (or
+   *    falsy) do not ever clear the stack from a setTimeout callback.
+   *  @property {KeyObject[]} KeyBind._stack - stack of keys
+   *  @property {HandlerObject[]} KeyBind._handlers - list of handlers
    *  @property {boolean} KeyBind._debug
-   *
+   *  @property {nubmer} KeyBind._timeoutId - timeoutId returned from
+   *    setTimeout, when setting the KeyBindPrototype.clearStackCallback.
+   *  @property {number} KeyBind._lastDownTime - last time a key was pressed
+   *    (registered on keydown event).
    */
   const KeyBind = Object.create(
     KeyBindPrototype,
     {
+
+      clearStackTimeout: {value: 750, writable: true,},
       _stack: {value: [], writable: true,},
       _handlers: {value: [], writable: true,},
       _debug: {value: false, writable: true,},
+      _timeoutId: {value: null, writable: true,},
+      _lastKeyDownTime: {value: 0, writable: true,},
     }
   );
 
@@ -370,8 +403,9 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#_keyBindingListener">_keyBindingListener</a></li><li><a href="global.html#_keyDownListener">_keyDownListener</a></li><li><a href="global.html#_keyUpListener">_keyUpListener</a></li><li><a href="global.html#addEventListener">addEventListener</a></li><li><a href="global.html#clearStack-clearthestackofkeysregisteredthroughkeydownandkeyupevents.">clearStack - clear the stack of keys registered through
-   keydown and keyup events.</a></li><li><a href="global.html#disableDisablekeybindingsbyremovingalleventlistenersandclearingthekeystack.">disable
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#_keyBindingListener">_keyBindingListener</a></li><li><a href="global.html#_keyDownListener">_keyDownListener</a></li><li><a href="global.html#_keyUpListener">_keyUpListener</a></li><li><a href="global.html#addEventListener">addEventListener</a></li><li><a href="global.html#clearStack-clearthestackofkeysregisteredthroughkeydownandkeyupevents.Alsoremovetimeoutcallbackwhichwouldclearthestack.">clearStack - clear the stack of keys registered through
+   keydown and keyup events.  Also remove timeout callback which would
+   clear the stack.</a></li><li><a href="global.html#disableDisablekeybindingsbyremovingalleventlistenersandclearingthekeystack.">disable
 
  Disable key bindings by removing all event listeners and clearing the
  key stack.</a></li><li><a href="global.html#disposeClearthestack,removeallhandlersandeventlisteners.CallthismethodbeforeyouwanttogarbacecollecttheKeyBindobject.">dispose
@@ -383,13 +417,13 @@
  listeners to the body element.</a></li><li><a href="global.html#equal-CompareifalistofkeysisthesameasalistofKeyObjectsinastack.KeyObjectisisofshape.ThisfunctionignoresaltKey,ctrlKey,metaKeyandshiftKey.">equal - Compare if a list of keys is the same as a list of KeyObjects in a stack. 
    KeyObject is is of shape.  This function ignores altKey, ctrlKey,
    metaKey and shiftKey.</a></li><li><a href="global.html#getKey-getkeyinplatformindependedwayfromaKeyEvent(keydownorkeyup).">getKey - get key in platform independed way from a KeyEvent (keydown or keyup).</a></li><li><a href="global.html#KeyBind">KeyBind</a></li><li><a href="global.html#removeEventListener-Removesalllistenersthatmatchthekeycombinationoronlytheonegivenbyhandlerargument.">removeEventListener - Removes all listeners that match the key
-   combination or only the one given by handler argument.</a></li><li><a href="global.html#reset-clearthestackandremoveallhandlers.">reset - clear the stack and remove all handlers.</a></li></ul>
+   combination or only the one given by handler argument.</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Jul 08 2016 11:29:43 GMT+0100 (WEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Jul 08 2016 12:20:24 GMT+0100 (WEST)
 </footer>
 
 <script> prettyPrint(); </script>

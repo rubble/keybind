@@ -235,7 +235,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     _clearStackCallback: function _clearStackCallback() {
       this._timeoutId = null;
       if (this._debug) console.log('_clearStackCallback');
-      if (this.stack.length > 0 && Date.now() - this._lastKeyDownTime > this.clearStackTimeout) {
+      if (this._stack.length > 0 && Date.now() - this._lastKeyDownTime > this.clearStackTimeout) {
         this.clearStack();
       }
     },
